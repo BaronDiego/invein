@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+{% block titulo %}Listado Ofertas{% endblock titulo %}
+{% block contenido %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="card card-info">
+            <div class="card-header">
+                <h2 class="card-title">Listado Ofertas  Invein</h2>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-1">
+                
+                {% if obj %}
+                <div class="table-responsive">
+                    <table class="table table-striped projects ">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No. Oferta</th>
+                                <th>Descripción</th>
+                                <th>Controles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in obj %}
+                                <tr class="text-center">
+                                    <td class="text-primary"><b>{{p.nro_de_oferta}}</b></td>
+                                    <td><b>{{p.descripcion}}</b></td>
+                                    <td>
+                                        <a class="btn btn-info btn-sm mb-1" href="{% url 'editar_oferta' p.pk %}">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm mb-1" href="{% url 'borrar_oferta' p.pk %}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <h3>No hay ofertas</h3>
+                {% endif %}
+                    
+                
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock contenido %}

@@ -1,0 +1,399 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block titulo %}{{proyecto.nombre}}{% endblock titulo %}
+
+{% block contenido %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-1">
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="card card-success">
+            <div class="card-header">
+                <h2 class="card-title">Detalle del proyecto: <b>{{proyecto.nombre}}</b> </h2>
+                <div class="card-tools">
+                    <button type="button" class="btn bg-success btn-sm" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn bg-success btn-sm" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Fecha de Inicio</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{proyecto.fecha_inicio|date:"d-M-Y"}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Fecha Fin</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{proyecto.fecha_fin|date:"d-M-Y"}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Duración</span>
+                                        <span class="info-box-number text-center text-muted mb-0">{{proyecto.duracion}}
+                                            días</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Cliente</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{proyecto.cliente}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Responsable del
+                                            Proyecto</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{proyecto.responsable}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Interventoria</span>
+                                        <span class="info-box-number text-center text-muted mb-0">
+                                            {% if proyecto.interventoria %}
+                                            SI
+                                            {% else %}
+                                            NO
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Estado</span>
+                                        <span class="info-box-number text-center text-muted mb-0">
+                                            <b>
+                                                {% if proyecto.estado == "SI" %}
+                                                    SIN INICIO
+                                                {% endif %}
+                                                {% if proyecto.estado == "I" %}
+                                                    INICIANDO
+                                                {% endif %}
+                                                {% if proyecto.estado == "P" %}
+                                                    PROGRESANDO
+                                                {% endif %}
+                                                {% if proyecto.estado == "A" %}
+                                                    AVANZADO
+                                                {% endif %}
+                                                {% if proyecto.estado == "T" %}
+                                                    TERMINADO
+                                                {% endif %}
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Objeto del Contrato</h2>
+                                <div class="post">
+                                    <p>{{proyecto.objeto}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="card card-info card-tabs">
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="custom-tabs-curvas-tab" data-toggle="pill"
+                                    href="#custom-tabs-curvas" role="tab" aria-controls="custom-tabs-curvas"
+                                    aria-selected="true">Curva "S"</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-mensajes-tab" data-toggle="pill"
+                                    href="#custom-tabs-mensajes" role="tab" aria-controls="custom-tabs-mensajes"
+                                    aria-selected="false">Comentarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-lista-actividades-tab" data-toggle="pill"
+                                    href="#custom-tabs-lista-actividades" role="tab"
+                                    aria-controls="custom-tabs-lista-actividades" aria-selected="false">Lista
+                                    Actividades</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-one-tabContent">
+
+                            <div class="tab-pane fade show active" id="custom-tabs-curvas" role="tabpanel"
+                                aria-labelledby="custom-tabs-curvas-tab">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="card card-primary">
+                                        <div class="card-body">
+                                            <div class="chart-container">
+                                                <canvas id="myChart" width="400" height="150"></canvas>
+                                            </div>
+                                           
+                                            <p><a href="{% url 'puntos' proyecto.id %}">ver puntos</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="custom-tabs-mensajes" role="tabpanel"
+                                aria-labelledby="custom-tabs-mensajes-tab">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="card card-primary">
+                                        <div class="card-body">
+                                            {% for comentario in comentarios %}
+                                            <div>
+                                                <p><b>Comentario</b> por <b class="text-primary">{{comentario.uc}}</b>
+                                                    el <b class="text-danger">{{comentario.creado|date:"d-M-Y"}}</b></p>
+                                                {{comentario.comentarios|linebreaks}}
+                                            </div>
+                                            {% empty %}
+                                            <p>Todavía no hay comentarios</p>
+                                            {% endfor %}
+                                            <hr>
+                                            {% if perms.proyectos.add_comentarios %}
+                                            {% if nuevo_comentario %}
+                                            <h2>Tu comentario ha sido agregado</h2>
+                                            {% else %}
+                                            <h2>Añadir nuevo comentario</h2>
+                                            <form action="." method="post">
+                                                {% csrf_token %}
+                                                {{comentario_form|crispy}}
+                                                <p><input type="submit" value="Añadir comentario"
+                                                        class="btn btn-success"></p>
+                                            </form>
+                                            {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="custom-tabs-lista-actividades" role="tabpanel"
+                                aria-labelledby="custom-tabs-lista-actividades-tab">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="card card-primary">
+                                        <div class="table-responsive">
+                                            {% if actividades %}
+                                            <table class="table table-striped projects">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th>Nombre Actividad</th>
+                                                        <th>Fecha Inicio</th>
+                                                        <th>Fecha Fin</th>
+                                                        <th>Duración</th>
+                                                        <th>Seguimiento</th>
+                                                        <th>Controles</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for a in actividades %}
+                                                    <tr>
+                                                        <td><b>
+                                                                <p class="text-success">{{a.nombre}}</p>
+                                                            </b></td>
+                                                        <td>{{a.fecha_inicio|date:"d-M-Y"}}</td>
+                                                        <td>{{a.fecha_fin|date:"d-M-Y"}}</td>
+                                                        <td>
+                                                            {% if a.duracion > 1 %}
+                                                            {{a.duracion}} días
+                                                            {% else %}
+                                                            {{a.duracion}} día
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge bg-primary">
+                                                                {% if a.programado == None %}
+                                                                Programado 0,0%
+                                                                {% else %}
+                                                                Programado {{a.programado}}%
+                                                                {% endif %}
+                                                            </span>
+                                                            <div class="progress progress-sm">
+                                                                <div class="progress-bar progress-bar-primary" role="progressbar"
+                                                                    aria-valuenow="57" aria-valuemin="0"
+                                                                    aria-valuemax="100"
+                                                                    style="width: {{a.programado|safe}}%">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="progress progress-sm">
+                                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                                    aria-valuenow="57" aria-valuemin="0"
+                                                                    aria-valuemax="100"
+                                                                    style="width: {{a.avance|safe}}%">
+                                                                </div>
+                                                            </div>
+                                                            <span class="badge bg-warning">
+                                                                {% if a.avance == None %}
+                                                                Ejecutado 0,0%
+                                                                {% else %}
+                                                                Ejecutado {{a.avance}}%
+                                                                {% endif %}
+
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-info btn-sm mb-1"
+                                                                href="{% url 'actualizar_actividad' a.pk %}">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-danger btn-sm mb-1"
+                                                                href="{% url 'borrar_actividad' a.pk %}">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            {% else %}
+                                            <h3>Todavia no hay actividades</h3>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-md-12 col-sm-12">
+            <div class="card card-primary card-tabs">
+                <div class="card-header p-0 pt-1">
+                    <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-actividad-tab" data-toggle="pill"
+                                href="#custom-tabs-actividad" role="tab" aria-controls="custom-tabs-actividad"
+                                aria-selected="false">Crear Actividad</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-curva-tab" data-toggle="pill"
+                                href="#custom-tabs-curva" role="tab" aria-controls="custom-tabs-curva"
+                                aria-selected="false">Crear Curva</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-one-tabContent">
+
+                        <div class="tab-pane fade" id="custom-tabs-actividad" role="tabpanel" aria-labelledby="custom-tabs-actividad-tab">
+                            <div class="col-sm-12 col-md-12">
+                                {% if perms.proyectos.add_actividad %}
+                                <div class="card card-info">
+                                    <div class="card-body">
+                                        <h2>Añadir nueva actividad</h2>
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{form_actividad|crispy}}
+                                            <p><input type="submit" value="Añadir Actividad"
+                                                    class="btn btn-success"></p>
+                                        </form>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="custom-tabs-curva" role="tabpanel" aria-labelledby="custom-tabs-curva-tab">
+                            <div class="col-sm-12 col-md-12">
+                                {% if perms.proyectos.add_curva_s %}
+                                <div class="card card-info">
+                                    <div class="card-body">
+                                        <h2>Añadir Punto de Curva</h2>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            {{form_curva|crispy}}
+                                            <p><input type="submit" value="Añadir" class="btn btn-success"></p>
+                                        </form>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{fechas1 | safe}},
+            datasets: [{
+                    label: 'Programado',
+                    data: {{programado_list_flat | safe}},
+                    borderColor: "red",
+                    fill: false,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Ejecutado',
+                    data: {{ejecutado_list_flat | safe}},
+                    borderColor: "green",
+                    fill: false,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+</script>
+{% endblock contenido %}

@@ -1,0 +1,152 @@
+{% load static %}
+<aside class="main-sidebar sidebar-danger elevation-4">
+  <a href="{% url 'panel' %}" class="brand-link">
+    <img src="{% static 'img/invein1.png' %}" alt="Logo Invein" class="img-fluid">
+  </a>
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image"></div>
+      <div class="info">
+        <a href="#" class="d-block">¡Hola! {{user.username|escape}}</a>
+      </div>
+    </div>
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column d-flex" data-widget="treeview" role="menu"
+        data-accordion="false">
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-wallet"></i>
+            <p>Comercial<i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'listado_comercial' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-warning"></i>
+                <p>Listado comerciales</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_comercial' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-warning"></i>
+                <p>Crear Comercial</p>
+              </a>
+            </li>
+            <hr>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-address-card"></i>
+            <p>Cliente<i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'listado_cliente' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-danger"></i>
+                <p>Listado clientes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_cliente' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-danger"></i>
+                <p>Crear Cliente</p>
+              </a>
+            </li>
+            <hr>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-bullhorn"></i>
+            <p>Ofertas<i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'listado_oferta' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-success"></i><p>Listado ofertas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_oferta' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-success"></i><p>Crear Oferta</p>
+              </a>
+            </li>
+            <hr>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-building"></i>
+            <p>Montajes<i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'listado_montaje' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-primary"></i><p>Listado Montajes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_montaje' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-primary"></i><p>Crear Montaje</p>
+              </a>
+            </li>
+            <hr>
+          </ul>
+        </li>
+
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-industry"></i>
+            <p>Fabricaciones<i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'listado_fabricacion' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-warning"></i><p>Listado Fabricaciones</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_fabricacion' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-warning"></i><p>Crear Fabricación</p>
+              </a>
+            </li>
+            <hr>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-chart-line"></i>
+            <p>Proyectos<i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'listado_proyecto' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-danger"></i><p>Listado proyecto</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'crear_proyecto' %}" class="nav-link">
+                <i class="far fa-circle nav-icon text-danger"></i><p>Crear proyecto</p>
+              </a>
+            </li>
+            <hr>
+            <hr>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</aside>

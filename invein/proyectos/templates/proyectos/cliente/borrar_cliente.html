@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block titulo %}Eliminar Cliente{% endblock titulo %}
+
+{% block contenido %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card card-danger">
+                        <div class="card-header">
+                            <h3 class="card-title">Eliminar Cliente</h3>
+                        </div>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <p>¿Deseas eliminar el cliente: <b>{{obj.nombre}}</b>?</p>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                <a type="button" class="btn btn-primary" href="{% url 'listado_cliente' %}">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock contenido %}

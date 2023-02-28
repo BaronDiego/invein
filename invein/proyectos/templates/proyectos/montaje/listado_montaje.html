@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+{% block titulo %}Listado Montaje{% endblock titulo %}
+{% block contenido %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="card card-info">
+            <div class="card-header">
+                <h2 class="card-title">Listado Montajes Invein</h2>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-1">
+                
+                {% if obj %}
+                <div class="table-responsive">
+                    <table class="table table-striped projects ">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No. Orden</th>
+                                <th>Oferta</th>
+                                <th>Aprobado</th>
+                                <th>Estado</th>
+                                <th>Costo</th>
+                                <th>Avance</th>
+                                <th>Controles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in obj %}
+                                <tr class="text-center">
+                                    <td class="text-primary"><b>{{p.numero_orden}}</b></td>
+                                    <td><b>{{p.oferta}}</b></td>
+                                    <td>
+                                        <b>
+                                            {% if p.aprobado == "S" %}
+                                                Si
+                                            {% else %}
+                                                No
+                                            {% endif %}
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            {% if p.estado == "SI" %}
+                                                SIN INICIO
+                                            {% endif %}
+                                            {% if p.estado == "I" %}
+                                                INICIANDO
+                                            {% endif %}
+                                            {% if p.estado == "P" %}
+                                                PROGRESANDO
+                                            {% endif %}
+                                            {% if p.estado == "A" %}
+                                                AVANZADO
+                                            {% endif %}
+                                            {% if p.estado == "T" %}
+                                                TERMINADO
+                                            {% endif %}
+                                        </b>
+                                    </td>
+                                    <td><b>${{p.costo|intcomma}}</b></td>
+                                    <td class="project_progress">
+                                        <div class="progress progress-sm">
+                                            <div class="progress-bar bg-orange" role="progressbar"
+                                                aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"
+                                                style="width: {{p.avance|safe}}%">
+                                            </div>
+                                        </div>
+                                        <small>
+                                            {% if p.avance == None %}
+                                                Ejecutado 0,0%
+                                            {% else %}
+                                                Ejecutado {{p.avance}}%
+                                            {% endif %}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info btn-sm mb-1" href="{% url 'editar_montaje' p.pk %}">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm mb-1" href="{% url 'borrar_montaje' p.pk %}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <h3>No hay montajes</h3>
+                {% endif %}
+                    
+                
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock contenido %}

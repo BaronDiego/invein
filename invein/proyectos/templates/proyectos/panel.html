@@ -1,0 +1,246 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block titulo %}Panel de Control{% endblock titulo %}
+
+{% block contenido %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-1">
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Listado de Proyectos</h3>
+                        </div>
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th style="width:30%">Avance</th>
+                                        <th>Costo</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in proyectos %}
+                                    <tr>
+                                        <td><a href="{% url 'detalle_proyecto' p.id %}">{{p.nombre|upper}}</a></td>
+                                        <td class="project_progress">
+                                            <small>
+                                                {% if p.programado == None %}
+                                                    Programado 0,0%
+                                                {% else %}
+                                                    Programado {{p.programado}}%
+                                                {% endif %}
+                                            </small>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-blue" role="progressbar" aria-valuenow="57"
+                                                    aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{p.programado|safe}}%">
+                                                </div>
+                                            </div>
+
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-orange" role="progressbar"
+                                                    aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{p.avance|safe}}%">
+                                                </div>
+                                            </div>
+                                            <small>
+                                                {% if p.avance == None %}
+                                                    Ejecutado 0,0%
+                                                {% else %}
+                                                    Ejecutado {{p.avance}}%
+                                                {% endif %}
+                                            </small>
+                                        </td>
+                                        <td>${{p.valor_proyecto_planeado|intcomma}}</td>
+                                        <td>{{p.cliente}}</td>
+                                        <td>
+                                            <b>
+                                                {% if p.estado == "SI" %}
+                                                    SIN INICIO
+                                                {% endif %}
+                                                {% if p.estado == "I" %}
+                                                    INICIANDO
+                                                {% endif %}
+                                                {% if p.estado == "P" %}
+                                                    PROGRESANDO
+                                                {% endif %}
+                                                {% if p.estado == "A" %}
+                                                    AVANZADO
+                                                {% endif %}
+                                                {% if p.estado == "T" %}
+                                                    TERMINADO
+                                                {% endif %}
+                                            </b>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                        
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Listado Fabricaciones</h3>
+                        </div>
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No Orden</th>
+                                        <th style="width:30%">Avance</th>
+                                        <th>Costo</th>
+                                        <th>Cliente</th>
+                                        <th>Oferta</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in fabricaciones %}
+                                    <tr>
+                                        <td><a href="{% url 'detalle_fabricacion' p.id %}">{{p.numero_orden|upper}}</a></td>
+                                        <td class="project_progress">
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-orange" role="progressbar"
+                                                    aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{p.avance|safe}}%">
+                                                </div>
+                                            </div>
+                                            <small>
+                                                {% if p.avance == None %}
+                                                    Ejecutado 0,0%
+                                                {% else %}
+                                                    Ejecutado {{p.avance}}%
+                                                {% endif %}
+                                            </small>
+                                        </td>
+                                        <td>${{p.costo|intcomma}}</td>
+                                        <td>{{p.oferta.cliente}}</td>
+                                        <td>{{p.oferta}}</td>
+                                        <td>
+                                            <b>
+                                                {% if p.estado == "SI" %}
+                                                    SIN INICIO
+                                                {% endif %}
+                                                {% if p.estado == "I" %}
+                                                    INICIANDO
+                                                {% endif %}
+                                                {% if p.estado == "P" %}
+                                                    PROGRESANDO
+                                                {% endif %}
+                                                {% if p.estado == "A" %}
+                                                    AVANZADO
+                                                {% endif %}
+                                                {% if p.estado == "T" %}
+                                                    TERMINADO
+                                                {% endif %}
+                                            </b>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                        
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Listado Montajes</h3>
+                        </div>
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No Orden</th>
+                                        <th style="width:30%">Avance</th>
+                                        <th>Costo</th>
+                                        <th>Cliente</th>
+                                        <th>Oferta</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in montajes %}
+                                    <tr>
+                                        <td><a href="{% url 'detalle_montaje' p.id %}">{{p.numero_orden|upper}}</a></td>
+                                        <td class="project_progress">
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-orange" role="progressbar"
+                                                    aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: {{p.avance|safe}}%">
+                                                </div>
+                                            </div>
+                                            <small>
+                                                {% if p.avance == None %}
+                                                    Ejecutado 0,0%
+                                                {% else %}
+                                                    Ejecutado {{p.avance}}%
+                                                {% endif %}
+                                            </small>
+                                        </td>
+                                        <td>${{p.costo|intcomma}}</td>
+                                        <td>{{p.oferta.cliente}}</td>
+                                        <td>{{p.oferta}}</td>
+                                        <td>
+                                            <b>
+                                                {% if p.estado == "SI" %}
+                                                    SIN INICIO
+                                                {% endif %}
+                                                {% if p.estado == "I" %}
+                                                    INICIANDO
+                                                {% endif %}
+                                                {% if p.estado == "P" %}
+                                                    PROGRESANDO
+                                                {% endif %}
+                                                {% if p.estado == "A" %}
+                                                    AVANZADO
+                                                {% endif %}
+                                                {% if p.estado == "T" %}
+                                                    TERMINADO
+                                                {% endif %}
+                                            </b>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                        
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock contenido %}
+{% block js_page %}
+<script>
+    $(document).ready(function(){
+        $('.table').DataTable();
+    });
+</script>
+{% endblock js_page %}

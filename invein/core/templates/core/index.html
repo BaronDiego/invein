@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}Inicio{% endblock titulo %}
+
+{% block index %}
+    {% if user.is_authenticated %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Invein</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Salir
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-list-ul mr-2"></i> Listado de proyectos
+                            </a>
+                            <div class="dropdown-divider"></div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    {% endif %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Invein</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                        <a href="{% url 'login' %}" class="text-white">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                        </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="display-3 text-success"><b>Invein</b></h1>
+            <p class="lead">App para gestión de proyectos</p>
+        </div>
+    </div>
+{% endblock index %}

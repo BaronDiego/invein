@@ -1,0 +1,181 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block titulo %}{{nombre}}{% endblock titulo %}
+
+{% block contenido %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-1">
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="card card-success">
+            <div class="card-header">
+                <h2 class="card-title">Detalle fabricación: <b>{{nombre}}</b> </h2>
+                <div class="card-tools">
+                    <button type="button" class="btn bg-success btn-sm" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn bg-success btn-sm" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Fecha de Inicio</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{fabricacion.creado|date:"d-M-Y"}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Oferta</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{fabricacion.oferta}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Costo</span>
+                                        <span class="info-box-number text-center text-muted mb-0">${{fabricacion.costo|intcomma}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Cliente</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{fabricacion.oferta.cliente}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Ceco</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">${{fabricacion.ceco|intcomma}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Valor Venta</span>
+                                        <span class="info-box-number text-center text-muted mb-0">
+                                           ${{fabricacion.valor_de_venta|intcomma}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Estado</span>
+                                        <span class="info-box-number text-center text-muted mb-0">
+                                            <b>
+                                                {% if fabricacion.estado == "SI" %}
+                                                    SIN INICIO
+                                                {% endif %}
+                                                {% if fabricacion.estado == "I" %}
+                                                    INICIANDO
+                                                {% endif %}
+                                                {% if fabricacion.estado == "P" %}
+                                                    PROGRESANDO
+                                                {% endif %}
+                                                {% if fabricacion.estado == "A" %}
+                                                    AVANZADO
+                                                {% endif %}
+                                                {% if fabricacion.estado == "T" %}
+                                                    TERMINADO
+                                                {% endif %}
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Avance</span>
+                                        <span class="info-box-number text-center text-muted mb-0">
+                                            <b>
+                                               {{fabricacion.avance}}%
+                                            </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Comercial</span>
+                                        <span
+                                            class="info-box-number text-center text-muted mb-0">{{fabricacion.oferta.comercial}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{fechas1 | safe}},
+            datasets: [{
+                    label: 'Programado',
+                    data: {{programado_list_flat | safe}},
+                    borderColor: "red",
+                    fill: false,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Ejecutado',
+                    data: {{ejecutado_list_flat | safe}},
+                    borderColor: "green",
+                    fill: false,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+</script>
+{% endblock contenido %}
